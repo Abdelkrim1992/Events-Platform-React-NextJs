@@ -1,25 +1,26 @@
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
   } from "@/components/ui/sheet"
+import Image from "next/image"
+import NavItems from "./NavItems"
   
 
 const MobileNav = () => {
   return (
-    <nav className="">
+    <nav className="md:hidden">
 <Sheet>
-  <SheetTrigger>Open</SheetTrigger>
-  <SheetContent>
+  <SheetTrigger className="ml-5">
+    <Image src="/assets/icons/menu.svg" alt="menu" width={25} height={25} className="cursor-pointer"/>
+  </SheetTrigger>
+  <SheetContent className="flex flex-col md:hidden g-5">
     <SheetHeader>
-      <SheetTitle>Are you absolutely sure?</SheetTitle>
-      <SheetDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
-      </SheetDescription>
+      <SheetTitle >
+        <NavItems />
+      </SheetTitle>
     </SheetHeader>
   </SheetContent>
 </Sheet>
