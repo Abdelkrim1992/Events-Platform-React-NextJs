@@ -16,7 +16,7 @@ const MobileNav = () => {
   <SheetTrigger className="ml-5">
     <Image src="/assets/icons/menu.svg" alt="menu" width={25} height={25} className="cursor-pointer"/>
   </SheetTrigger>
-  <SheetContent className="flex flex-col md:hidden g-5">
+  <SheetContent className="flex flex-col md:hidden">
     <SheetHeader>
       <SheetTitle >
         <NavItems />

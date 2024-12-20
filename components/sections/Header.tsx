@@ -19,7 +19,7 @@ const Header = () => {
         <nav className="md:flex-between hidden w-full max-w-xs">
             <NavItems />
         </nav>
-        <div className="flex w-36 items-center justify-end g-3">
+        <div className="flex w-36 items-center justify-end">
           <SignedIn>
             <UserButton afterSignOutUrl="/"/>
           </SignedIn>
