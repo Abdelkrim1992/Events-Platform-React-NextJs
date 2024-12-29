@@ -1,19 +1,20 @@
 import mongoose from "mongoose"
 
-let mongo = ( global as any).mongoose || { connection : null, promise : null }
+let mongo = (global as any).mongoose || { connection : null , promise : null}
 
-const mongo_URI = process.env.MONGODB_URI
+const mongo_URL = process.env.MONGODB_URI
 
-export const connectDB = async() =>{
+export const connectionDB = async () =>{
     if(mongo.connection){
         return mongo.connection
     }
-    if( mongo_URI != null ){
-        mongo.promise = mongoose.connect(mongo_URI, {
-            dbName : 'events-platform',
-            bufferCommands : false
-        });
-        mongo.connection = await mongo.promise;
+    if(!mongo_URL){
+        throw new Error('error connection database')
+    } else {
+        mongo.promise = mongoose.connect( mongo_URL, {
+            dbName : 'event-platform',
+        })
+        mongo.connection = await mongo.promise
     }
-    return mongo.connection;
+    return mongo.connection
 }
