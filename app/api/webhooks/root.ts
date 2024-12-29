@@ -1,7 +1,9 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
-import { WebhookEvent, clerkClient } from '@clerk/nextjs/server'
-import { CreateUser }  from '../../../lib/actions/user.actions'
+import { WebhookEvent } from '@clerk/nextjs/server'
+import { CreateUser, UpdateUser, DeleteUser }  from '../../../lib/actions/user.actions'
+import { clerkClient } from '@clerk/clerk-sdk-node'
+import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET
@@ -48,12 +50,12 @@ export async function POST(req: Request) {
 
   // Do something with payload
   // For this guide, log payload to console
-  const { id } = evt.data
+  
   const eventType = evt.type
   
   if(eventType === 'user.created'){
 
-    const {id, first_name, last_name, image_url, username, email_addresses} = evt.data;
+    const { id, first_name, last_name, image_url, username, email_addresses } = evt.data;
     const user = {
         clerkId : id,
         username : username!,
@@ -65,10 +67,10 @@ export async function POST(req: Request) {
     
     const newUser = await CreateUser(user);
 
-    if(newUser){
-        await clerkClient.users.updateUserMetadata(id, {
+    if(newUser != null){
+        await clerkClient.users.updateUserMetadata(id,{
             publicMetadata : {
-                userId : newUser.id
+                userId : user.clerkId
             }
         })
     }
@@ -76,6 +78,30 @@ export async function POST(req: Request) {
     return NextResponse.json({ message : 'ok', user : newUser})
   }
 
+  if(eventType === 'user.updated'){
+
+    const { id, first_name, last_name, image_url, username, email_addresses } = evt.data;
+    const user = {
+        username : username!,
+        email : email_addresses[0].email_address,
+        firstName : first_name!,
+        lastName : last_name!,
+        photo : image_url
+    }
+    
+    const updateUser = await UpdateUser(id, user);
+
+    return NextResponse.json({ message : 'ok', user : updateUser})
+  }
+  
+  if(eventType === 'user.deleted'){
+
+    const { id } = evt.data;
+    
+    const deleteUser = await DeleteUser(id!);
+
+    return NextResponse.json({ message : 'ok', user : deleteUser})
+  }
 
   return new Response('Webhook received', { status: 200 })
 }
