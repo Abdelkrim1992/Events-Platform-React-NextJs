@@ -1,18 +1,22 @@
 'user server'
+
 import { CreateUserParams, UpdateUserParams } from '@/types';
 import { connectionDB } from '../database/index';
 import User  from '../models/user.model';
+import Event from '../models/event.model';
+import Category from '../models/category.model';
+import Order from '../models/order.model';
 
-export const CreateUser = async(user : CreateUserParams) =>{
+export const CreateUser : any = async(user : CreateUserParams) =>{
     try {
         await connectionDB();
 
-        const newUser = await User.create(user)
+        const newUser = await User.create(user);
 
-        JSON.parse(JSON.stringify(newUser));
+        return JSON.parse(JSON.stringify(newUser));
 
     } catch (error) {
-        console.log('error in CreateUser')
+        throw new Error('error in createUser')
     }
 }
 
@@ -21,12 +25,12 @@ export const UpdateUser = async (clerkId : String, user: UpdateUserParams) =>{
 
         await connectionDB();
 
-        const updateUser = await User.findByIdAndUpdate({clerkId}, user);
+        const updateUser = await User.findOneAndUpdate(clerkId, user);
 
         return JSON.parse(JSON.stringify(updateUser));
 
     } catch (error) {
-        console.log('error in update user action')
+        throw new Error('error updatedUser')
     }
 }
 
@@ -35,7 +39,7 @@ export const DeleteUser = async(clerkId : String) =>{
         
         await connectionDB();
 
-        const deleteUser = await User.findByIdAndDelete({clerkId});
+        const deleteUser = await User.findOne(clerkId);
         
         return JSON.parse(JSON.stringify(deleteUser));
 
