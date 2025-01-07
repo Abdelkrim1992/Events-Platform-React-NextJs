@@ -12,7 +12,7 @@ export const connectionDB = async () =>{
         throw new Error('error connection database')
     } else {
         mongo.promise = mongoose.connect( mongo_URL, {
-            dbName : 'event-platform',
+            dbName : 'Events',
         })
         mongo.connection = await mongo.promise
     }
