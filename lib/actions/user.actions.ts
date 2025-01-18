@@ -1,6 +1,7 @@
 'user server'
 
 import { CreateUserParams, UpdateUserParams } from '@/types';
+import prisma from '../db';
 
 export const CreateUser = async(user : CreateUserParams) =>{
     try {
@@ -14,26 +15,25 @@ export const CreateUser = async(user : CreateUserParams) =>{
     }
 }
 
-export const UpdateUser = async (Id : string, user: UpdateUserParams) =>{
+export const UpdateUser = async (id : string, user: UpdateUserParams) =>{
     try {
-
         const updateUser = await prisma.user.update({ 
-            where : { Id },
+            where : { id },
             data : user
         });
 
-        return updatUser;
+        return updateUser;
 
     } catch (error) {
         throw new Error('error updatedUser')
     }
 }
 
-export const DeleteUser = async (Id : string) =>{
+export const DeleteUser = async (id : string) =>{
     try {
 
         const deleteUser = await prisma.user.delete({ 
-            where : { Id }
+            where : { id }
          })
         
         return deleteUser;
