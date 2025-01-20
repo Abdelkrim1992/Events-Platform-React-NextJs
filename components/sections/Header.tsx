@@ -8,8 +8,12 @@ import {
 import { Button } from "../ui/button"
 import NavItems from "./NavItems"
 import MobileNav from "./MobileNav"
+import { checkUser } from "@/app/api/route/checkUser"
 
-const Header = () => {
+const Header = async () => {
+
+  const user = await checkUser();
+
   return (
     <header className="w-full border-b">
       <div className="wrapper flex items-center justify-between">
