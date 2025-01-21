@@ -1,17 +1,29 @@
-import { Dispatch, SetStateAction } from "react"
+"use client";
 
-type FileUploadProps = {
-    onChangeFile? : (value:string) => void,
-    ImageURL? : string,
-    setFiles : Dispatch<SetStateAction<File[]>>
+import { UploadButton } from "@/lib/uploadfile/uploadthing";
+import { Dispatch, SetStateAction } from "react";
+
+type UploadFileProps = {
+  onChangeFile : (value:string) =>void,
+  ImageURL : string,
+  setFiles : Dispatch<SetStateAction<File[]>>
 }
 
-const UploadFile = ({onChangeFile, ImageURL, setFiles}: FileUploadProps) => {
+export default function Home({onChangeFile, ImageURL, setFiles}: UploadFileProps) {
   return (
-    <div>
-      
-    </div>
-  )
+    <main className="flex flex-col items-center justify-between p-5">
+      <UploadButton
+        endpoint="imageUploader"
+        onClientUploadComplete={(res) => {
+          // Do something with the response
+          console.log("Files: ", res);
+          alert("Upload Completed");
+        }}
+        onUploadError={(error: Error) => {
+          // Do something with the error.
+          alert(`ERROR! ${error.message}`);
+        }}
+      />
+    </main>
+  );
 }
-
-export default UploadFile
