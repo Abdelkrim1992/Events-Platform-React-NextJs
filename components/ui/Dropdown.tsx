@@ -53,7 +53,7 @@ export const Dropdown = ({ onChangeHandler, value }: DroppdownType) => {
             ))}
 
           <AlertDialog >
-            <AlertDialogTrigger className="p-meduim-14 flex w-full py-3 pl-5 rounded-sm">Open</AlertDialogTrigger>
+            <AlertDialogTrigger className="p-meduim-14 flex w-full py-3 pl-5 rounded-sm">Add Category</AlertDialogTrigger>
             <AlertDialogContent className="bg-white rounded-sm">
               <AlertDialogHeader >
                 <AlertDialogTitle>New Category</AlertDialogTitle>

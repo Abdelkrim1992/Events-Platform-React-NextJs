@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -47,8 +46,8 @@ const EventForm = ({ userId, type }: EventFormProp) => {
   const [EndDate, setEndDate] = useState(new Date());
 
   return (
-    <Form {...form}>
-      <form className="flex flex-col gap-5">
+    <Form {...form} >
+      <form onSubmit= {form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div className="flex flex-col gap-5 md:flex-row">
           <FormField
             control={form.control}
@@ -127,19 +126,18 @@ const EventForm = ({ userId, type }: EventFormProp) => {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel>Location</FormLabel>
-                <FormControl className="flex-center bg-grey-50 w-full rounded-full pl-2">
-                  <div>
+                <FormControl className="flex bg-grey-50 w-full rounded-full pl-3">
+                  <div >
                     <Image
                       src="/assets/icons/location-grey.svg"
-                      width={24}
                       height={24}
-                      alt="location"
+                      width={24}
+                      alt="url"
                     />
-                    <input
-                      type="text"
+                    <Input
                       placeholder="Enter event location"
                       {...field}
-                      className="input-field w-full"
+                      className="input-field"
                     />
                   </div>
                 </FormControl>
@@ -193,7 +191,7 @@ const EventForm = ({ userId, type }: EventFormProp) => {
                     />
                     <DatePicker
                       selected={field.value}
-                      onChange={(date: Date) => field.onChange(date)}
+                      onDateChange={(date: Date) => field.onChange(date)}
                       className="h-[55px]"
                       showTimeSelect
                       dateFormat={"dd/MM/yyyy h:mm aa"}
@@ -220,10 +218,10 @@ const EventForm = ({ userId, type }: EventFormProp) => {
                       height={24}
                       alt="dollar"
                     />
-                    <input
+                    <Input
                       type="number"
                       placeholder="Enter event price"
-                      className="input-field bg-grey-50 w-full"
+                      className="input-field"
                       {...field}
                     />
                     <FormField
@@ -232,9 +230,11 @@ const EventForm = ({ userId, type }: EventFormProp) => {
                       render={({ field }) => (
                         <FormItem className="w-full">
                           <FormControl>
-                            <div className="flex gap-3 items-center mt-3">
+                            <div className="flex gap-3 items-center mt-3 pl-12">
                               <label>Free Ticket</label>
                               <Checkbox
+                                onCheckedChange = {field.onChange}
+                                checked = {field.value}
                                 id="isFree"
                                 className="border-2 border-primary-500"
                               />
@@ -250,9 +250,39 @@ const EventForm = ({ userId, type }: EventFormProp) => {
               </FormItem>
             )}
           />
+
+          
         </div>
-        <Button type="submit" className="wrapper w-full">
-          Submit
+        
+        <div className="flex flex-col gap-5 md:flex-row">
+          <FormField
+            control={form.control}
+            name="url"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>URL</FormLabel>
+                <FormControl className="flex bg-grey-50 w-full rounded-full pl-3">
+                  <div >
+                    <Image
+                      src="/assets/icons/link.svg"
+                      height={24}
+                      width={24}
+                      alt="url"
+                    />
+                    <Input
+                      placeholder="Enter Url"
+                      {...field}
+                      className="input-field"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button type="submit" disabled={form.formState.isSubmitting} className="button col-span-2 w-full rounded-full" >
+          { form.formState.isSubmitting ? "Submitting ..." : `${type} Event`}
         </Button>
       </form>
     </Form>
