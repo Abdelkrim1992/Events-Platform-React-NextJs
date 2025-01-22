@@ -8,11 +8,11 @@ import {
 import { Button } from "../ui/button"
 import NavItems from "./NavItems"
 import MobileNav from "./MobileNav"
-import { checkUser } from "@/app/api/route/checkUser"
+import { CreateUser } from "@/app/api/actions/user.actions"
 
 const Header = async () => {
 
-  const user = await checkUser();
+  const user = await CreateUser();
 
   return (
     <header className="w-full border-b">
