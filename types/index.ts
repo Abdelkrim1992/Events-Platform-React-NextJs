@@ -1,17 +1,14 @@
 // ====== USER PARAMS
 export type CreateUserParams = {
-    firstName: string
-    lastName: string
     userName: string
     email: string
-    image: string
+    imageURL: string
   }
   
   export type UpdateUserParams = {
-    firstName: string
-    lastName: string
+    email : string
     userName: string
-    image: string
+    imageURL: string
   }
   
   // ====== EVENT PARAMS
