@@ -35,7 +35,7 @@ export async function CreateUser() {
       },
     });
 
-    return newUser;
+    return JSON.parse(JSON.stringify(newUser));
 
   } catch (error) {
     console.error("Error in createUser:", error);
@@ -53,7 +53,7 @@ export async function UpdateUser(clerkId : string, data : UpdateUserParams){
       data,
     })
 
-    return updateUser
+    return JSON.parse(JSON.stringify(updateUser));
 
   } catch (error) {
     console.error("Error in updateUser:", error);
@@ -70,7 +70,7 @@ export async function DeleteUser(clerkId : string){
       }
     })
 
-    return deleteUser;
+    return JSON.parse(JSON.stringify(deleteUser));
 
   } catch (error) {
     console.error("Error in deleteUser:", error);
