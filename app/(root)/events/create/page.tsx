@@ -1,3 +1,5 @@
+'use client'
+
 import EventForm from "@/components/shared/EventForm"
 import { auth, redirectToSignIn, useUser } from "@clerk/nextjs";
 import { Route } from "lucide-react";
