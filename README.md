@@ -149,3 +149,7 @@ STRIPE_SECRET_KEY=sk_test_replace
 STRIPE_WEBHOOK_SECRET=whsec_replace
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_replace
 ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8922f5de56cb7588a59d460e3b03c595040c9bca
