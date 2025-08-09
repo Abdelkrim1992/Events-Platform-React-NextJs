@@ -150,6 +150,37 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
 
+## Environment Variables
+
+Create a `.env` file with your own credentials. Do not commit real secrets.
+
+```
+# App
+NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+
+# MongoDB
+MONGODB_URI=mongodb+srv://<user>:<pass>@<host>/<db>?retryWrites=true&w=majority
+
+# Clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_replace
+CLERK_SECRET_KEY=sk_test_replace
+NEXT_CLERK_WEBHOOK_SECRET=whsec_replace
+
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+
+# UploadThing
+UPLOADTHING_SECRET=utsecret_replace
+UPLOADTHING_APP_ID=utapp_replace
+
+# Stripe
+STRIPE_SECRET_KEY=sk_test_replace
+STRIPE_WEBHOOK_SECRET=whsec_replace
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_replace
+```
+
 ## <a name="snippets">🕸️ Snippets</a>
 
 <details>
