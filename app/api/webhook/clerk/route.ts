@@ -72,7 +72,14 @@ export async function POST(req: Request) {
       photo,
     }
 
-    const newUser = await createUser(user);
+    // Try to create, if exists then fetch
+    let newUser = null as any
+    try {
+      newUser = await createUser(user);
+    } catch (e) {
+      // likely duplicate, fetch instead
+      newUser = await (await import('@/lib/actions/user.actions')).getUserByClerkId(id);
+    }
 
     if(newUser) {
       await clerkClient.users.updateUserMetadata(id, {

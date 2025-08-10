@@ -1,19 +1,37 @@
-'use client'
-
 import EventForm from "@/components/shared/EventForm"
-import { auth, redirectToSignIn, useUser } from "@clerk/nextjs";
-import { Route } from "lucide-react";
-import { redirect } from "next/dist/server/api-utils";
-import { useEffect } from "react";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { createUser, getUserByClerkId } from "@/lib/actions/user.actions";
 
-const CreateEvent = () => {
-  const { user } = useUser();
+const CreateEvent = async () => {
+  const user = await currentUser();
+  if (!user) {
+    redirect('/sign-in');
+  }
 
-  const userId = user?.id as string;
+  let dbUser: any | null = null;
+  try {
+    dbUser = await getUserByClerkId(user.id);
+  } catch {}
 
-  useEffect(() => {
-    console.log('user id',userId);
-  }, [userId]);
+  if (!dbUser) {
+    const email = user.emailAddresses?.[0]?.emailAddress ?? '';
+    const username = user.username ?? (email ? email.split('@')[0] : user.id);
+    const firstName = user.firstName ?? '';
+    const lastName = user.lastName ?? '';
+    const photo = user.imageUrl ?? '';
+
+    dbUser = await createUser({
+      clerkId: user.id,
+      email,
+      username,
+      firstName,
+      lastName,
+      photo,
+    });
+  }
+
+  const userId = dbUser?._id || '';
 
   return (
     <>
